@@ -1,0 +1,68 @@
+--DDL문 (트랜잭션이 없습니다)
+
+DROP TABLE DEPTS;
+CREATE TABLE DEPTS(
+     DEPT_NO NUMBER(2), --숫자 두 자리
+     DEPT_NAME VARCHAR2(30), --30 BYTE 한글은 15글자, 영어는 30글자
+     DEPT_YN CHAR(1), --고정문자 1BYTE(고정 크기의 1 BYTE 사용)
+     DEPT_DATE DATE, --날짜 타입
+     DEPT_BONUS NUMBER(10,2), --전체 숫자 10자리, 소수점 2자리 사용 (정수는 8자리까지)
+     DEPT_CONTENT LONG --최대 2기가 가변 문자열 (VARCHAR2 보다 더 큰 문자열), 많이 사용X
+);
+
+DESC DEPTS;
+
+INSERT INTO DEPTS VALUES(99, 'HELLO', 'Y', SYSDATE, 3.14, 'HELLO WORLD~~~ BYE');
+INSERT INTO DEPTS VALUES(100, 'HELLO', 'N', SYSDATE, 3.14, 'HELLO WORLD');
+INSERT INTO DEPTS VALUES(10, 'HELLO', '가', SYSDATE, 3.14, 'HELLO');
+
+SELECT * FROM DEPTS;
+------------------------------------------------------------------------------
+--컬럼 추가 ADD
+ALTER TABLE DEPTS ADD (DEPT_COUNT NUMBER(3));
+
+SELECT * FROM DEPTS;
+
+--컬럼명 변경 RENAME COLUMN TO
+ALTER TABLE DEPTS RENAME COLUMN DEPT_COUNT TO EMP_COUNT;
+
+--컬럼 수정 MODIFY
+ALTER TABLE DEPTS MODIFY EMP_COUNT NUMBER(5);
+ALTER TABLE DEPTS MODIFY DEPT_NAME VARCHAR2(1);
+
+--컬럼 삭제 DROP COLUMN
+ALTER TABLE DEPTS DROP COLUMN EMP_COUNT;
+
+DESC DEPTS;
+-----------------------------------------------------------------------------
+--테이블 삭제 DROP
+DROP TABLE EMPS;
+DROP TABLE DEPARTMENTS; --부서테이블은 직원테이블과 제약조건이 연결되어 있어서, 삭제 불가
+--DROP TABLE DEPARTMENTS CASCADE 제약조건명; --제약조건이라는 것을 삭제하면서 테이블을 지움 -- 복구불가
+
+--테이브 자르기 TRUNCATE - 데이터를 전부 지우고, 데이터의 저장공간 해제
+TRUNCATE TABLE DEPTS;
+SELECT * FROM DEPTS;
+
+------------------------------------------------------------------
+--테이블명 DEPT2
+--DEPT_NO 숫자타입 3글자
+--DEPT_NAME 가변형문자 15바이트
+--LOCA_NUMBER 숫자타입 4글자
+--DEPT_GENDER 고정문자 1글자
+--REG_DATE 날짜타입
+--DEPT_BONUS 실수 5자리까지
+--테이블 1행 삽입
+
+CREATE TABLE DEPT2(
+DEPT_NO NUMBER(3),
+DEPT_NAME VARCHAR(15),
+LOCA_NUMBER NUMBER(4),
+DEPT_GENDER CHAR(1),
+REG_DATE DATE,
+DEPT_BOUNS NUMBER(5,1)
+);
+
+SELECT * FROM DEPT2;
+
+INSERT INTO DEPT2 VALUES(001, '홍길동', 1545, 'Y', SYSDATE, 15.2);
